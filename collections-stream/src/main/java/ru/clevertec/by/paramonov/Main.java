@@ -13,9 +13,9 @@ public class Main {
 //        task2();
 //        task3();
 //        task4();
-        task5();
+//        task5();
 //        task6();
-//        task7();
+        task7();
 //        task8();
 //        task9();
 //        task10();
@@ -79,7 +79,9 @@ public class Main {
 
     private static void task7() throws IOException {
         List<Animal> animals = Util.getAnimals();
-        //        animals.stream() Продолжить ...
+        boolean isNoOneFromOceania = animals.stream()
+                .noneMatch(x -> x.getOrigin().equalsIgnoreCase("Oceania"));
+        System.out.println(isNoOneFromOceania);
     }
 
     private static void task8() throws IOException {
