@@ -9,21 +9,21 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        task1();
-        task2();
-        task3();
-        task4();
+//        task1();
+//        task2();
+//        task3();
+//        task4();
         task5();
-        task6();
-        task7();
-        task8();
-        task9();
-        task10();
-        task11();
-        task12();
-        task13();
-        task14();
-        task15();
+//        task6();
+//        task7();
+//        task8();
+//        task9();
+//        task10();
+//        task11();
+//        task12();
+//        task13();
+//        task14();
+//        task15();
     }
 
     private static void task1() throws IOException {
@@ -66,7 +66,10 @@ public class Main {
 
     private static void task5() throws IOException {
         List<Animal> animals = Util.getAnimals();
-        //        animals.stream() Продолжить ...
+        boolean isAnyHungarian = animals.stream()
+                .filter(x -> ((x.getAge() >= 20) && (x.getAge() <= 30)))
+                .anyMatch(x -> x.getOrigin().equalsIgnoreCase("hungarian"));
+        System.out.println(isAnyHungarian);
     }
 
     private static void task6() throws IOException {
