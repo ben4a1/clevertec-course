@@ -38,8 +38,9 @@ public class Main {
 
     private static void task2() throws IOException {
         List<Animal> animals = Util.getAnimals();
-        //        animals.stream() Продолжить ...
-
+                animals.stream()
+                        .filter(x -> x.getOrigin().equalsIgnoreCase("japanese"))
+                        .forEach(x -> System.out.printf("%s \n", x.getBread()));
     }
 
     private static void task3() throws IOException {
