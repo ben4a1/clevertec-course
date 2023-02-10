@@ -4,6 +4,7 @@ import ru.clevertec.by.paramonov.model.*;
 import ru.clevertec.by.paramonov.util.Util;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
 
 public class Main {
@@ -27,7 +28,12 @@ public class Main {
 
     private static void task1() throws IOException {
         List<Animal> animals = Util.getAnimals();
-        //        animals.stream() Продолжить ...
+                animals.stream()
+                        .filter(x -> ((x.getAge() >= 10) && (x.getAge() < 20)))
+                        .sorted(Comparator.comparingInt(Animal::getAge))
+                        .skip(14)
+                        .limit(7)
+                        .forEach(System.out::println);
     }
 
     private static void task2() throws IOException {
