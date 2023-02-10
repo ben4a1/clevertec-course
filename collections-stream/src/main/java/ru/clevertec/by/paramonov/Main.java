@@ -9,21 +9,21 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        task1();
-        task2();
+//        task1();
+//        task2();
         task3();
-        task4();
-        task5();
-        task6();
-        task7();
-        task8();
-        task9();
-        task10();
-        task11();
-        task12();
-        task13();
-        task14();
-        task15();
+//        task4();
+//        task5();
+//        task6();
+//        task7();
+//        task8();
+//        task9();
+//        task10();
+//        task11();
+//        task12();
+//        task13();
+//        task14();
+//        task15();
     }
 
     private static void task1() throws IOException {
@@ -36,6 +36,7 @@ public class Main {
                         .forEach(System.out::println);
     }
 
+    //TODO female - uppercase
     private static void task2() throws IOException {
         List<Animal> animals = Util.getAnimals();
                 animals.stream()
@@ -45,7 +46,12 @@ public class Main {
 
     private static void task3() throws IOException {
         List<Animal> animals = Util.getAnimals();
-        //        animals.stream() Продолжить ...
+                animals.stream()
+                        .filter(x -> x.getAge() > 30)
+                        .map(Animal::getOrigin)
+                        .filter(x -> x.startsWith("A"))
+                        .distinct()
+                        .forEach(System.out::println);
     }
 
     private static void task4() throws IOException {
