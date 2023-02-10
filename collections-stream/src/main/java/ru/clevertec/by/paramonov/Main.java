@@ -54,9 +54,13 @@ public class Main {
                         .forEach(System.out::println);
     }
 
+    //TODO sout count
     private static void task4() throws IOException {
         List<Animal> animals = Util.getAnimals();
-        //        animals.stream() Продолжить ...
+        long femaleCount = animals.stream()
+                .filter(x -> x.getGender().equalsIgnoreCase("female"))
+                .count();
+        System.out.println(femaleCount);
 
     }
 
