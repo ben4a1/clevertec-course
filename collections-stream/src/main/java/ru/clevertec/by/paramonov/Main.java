@@ -1,5 +1,6 @@
 package ru.clevertec.by.paramonov;
 
+import com.fasterxml.jackson.core.JsonToken;
 import ru.clevertec.by.paramonov.model.*;
 import ru.clevertec.by.paramonov.util.Util;
 
@@ -9,21 +10,21 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-//        task1();
-//        task2();
-//        task3();
-//        task4();
-//        task5();
-//        task6();
+        task1();
+        task2();
+        task3();
+        task4();
+        task5();
+        task6();
         task7();
-//        task8();
-//        task9();
-//        task10();
-//        task11();
-//        task12();
-//        task13();
-//        task14();
-//        task15();
+        task8();
+        task9();
+        task10();
+        task11();
+        task12();
+        task13();
+        task14();
+        task15();
     }
 
     private static void task1() throws IOException {
@@ -54,7 +55,6 @@ public class Main {
                         .forEach(System.out::println);
     }
 
-    //TODO sout count
     private static void task4() throws IOException {
         List<Animal> animals = Util.getAnimals();
         long femaleCount = animals.stream()
@@ -74,7 +74,10 @@ public class Main {
 
     private static void task6() throws IOException {
         List<Animal> animals = Util.getAnimals();
-        //        animals.stream() Продолжить ...
+        boolean isOnlyMaleAndFemale = animals.stream()
+                .allMatch(x -> (x.getGender().equalsIgnoreCase("male")
+                                || x.getGender().equalsIgnoreCase("female")));
+        System.out.println(isOnlyMaleAndFemale);
     }
 
     private static void task7() throws IOException {
