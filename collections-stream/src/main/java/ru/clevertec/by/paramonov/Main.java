@@ -19,8 +19,8 @@ public class Main {
 //        task5();
 //        task6();
 //        task7();
-        task8();
-//        task9();
+//        task8();
+        task9();
 //        task10();
 //        task11();
 //        task12();
@@ -105,7 +105,10 @@ public class Main {
 
     private static void task9() throws IOException {
         List<Animal> animals = Util.getAnimals();
-        //        animals.stream() Продолжить ...
+        OptionalInt min = animals.stream()
+                .mapToInt(x -> x.getBread().toCharArray().length)
+                .min();
+        min.ifPresent(System.out::println);
     }
 
     private static void task10() throws IOException {
