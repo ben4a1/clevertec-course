@@ -5,10 +5,7 @@ import ru.clevertec.by.paramonov.model.*;
 import ru.clevertec.by.paramonov.util.Util;
 
 import java.io.IOException;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-import java.util.OptionalInt;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -121,7 +118,11 @@ public class Main {
 
     private static void task11() throws IOException {
         List<Animal> animals = Util.getAnimals();
-        //        animals.stream() Продолжить ...
+        OptionalDouble indonesianAverageAge = animals.stream()
+                .filter(x -> x.getOrigin().equalsIgnoreCase("Indonesian"))
+                .mapToInt(Animal::getAge)
+                .average();
+        indonesianAverageAge.ifPresent(System.out::println);
     }
 
     private static void task12() throws IOException {
