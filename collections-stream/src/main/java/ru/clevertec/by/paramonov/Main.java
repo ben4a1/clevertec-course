@@ -28,19 +28,23 @@ public class Main {
 
     private static void task1() throws IOException {
         List<Animal> animals = Util.getAnimals();
-                animals.stream()
-                        .filter(x -> ((x.getAge() >= 10) && (x.getAge() < 20)))
-                        .sorted(Comparator.comparingInt(Animal::getAge))
-                        .skip(14)
-                        .limit(7)
-                        .forEach(System.out::println);
+        animals.stream()
+                .filter(x -> ((x.getAge() >= 10) && (x.getAge() < 20)))
+                .sorted(Comparator.comparingInt(Animal::getAge))
+                .skip(14)
+                .limit(7)
+                .forEach(System.out::println);
     }
 
+    //TODO without 'if'
     private static void task2() throws IOException {
         List<Animal> animals = Util.getAnimals();
-                animals.stream()
-                        .filter(x -> x.getOrigin().equalsIgnoreCase("japanese"))
-                        .forEach(x -> System.out.printf("%s \n", x.getBread()));
+        animals.stream()
+                .filter(x -> x.getOrigin().equalsIgnoreCase("japanese"))
+                .map(x -> x.getGender().equalsIgnoreCase("female")
+                        ? x.getBread().toUpperCase()
+                        : x.getBread())
+                .forEach(System.out::println);
     }
 
     private static void task3() throws IOException {
