@@ -5,6 +5,8 @@ import ru.clevertec.by.paramonov.model.*;
 import ru.clevertec.by.paramonov.util.Util;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 public class Main {
@@ -50,12 +52,12 @@ public class Main {
 
     private static void task3() throws IOException {
         List<Animal> animals = Util.getAnimals();
-                animals.stream()
-                        .filter(x -> x.getAge() > 30)
-                        .map(Animal::getOrigin)
-                        .filter(x -> x.startsWith("A"))
-                        .distinct()
-                        .forEach(System.out::println);
+        animals.stream()
+                .filter(x -> x.getAge() > 30)
+                .map(Animal::getOrigin)
+                .filter(x -> x.startsWith("A"))
+                .distinct()
+                .forEach(System.out::println);
     }
 
     private static void task4() throws IOException {
@@ -127,7 +129,14 @@ public class Main {
 
     private static void task12() throws IOException {
         List<Person> people = Util.getPersons();
-//        Продолжить...
+        LocalDate now = LocalDate.now();
+        people.stream()
+                .filter(x -> x.getGender().equalsIgnoreCase("male"))
+                .filter(x -> ((ChronoUnit.YEARS.between(x.getDateOfBirth(), now)) >= 18)
+                             && ((ChronoUnit.YEARS.between(x.getDateOfBirth(), now)) < 27))
+                .sorted(Comparator.comparingInt(Person::getRecruitmentGroup))
+                .limit(200)
+                .forEach(System.out::println);
     }
 
     private static void task13() throws IOException {
