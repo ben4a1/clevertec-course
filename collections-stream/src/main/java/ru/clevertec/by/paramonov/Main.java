@@ -8,21 +8,23 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        task1();
-        task2();
-        task3();
-        task4();
-        task5();
-        task6();
-        task7();
-        task8();
-        task9();
-        task10();
-        task11();
-        task12();
+//        task1();
+//        task2();
+//        task3();
+//        task4();
+//        task5();
+//        task6();
+//        task7();
+//        task8();
+//        task9();
+//        task10();
+//        task11();
+//        task12();
         task13();
         task14();
         task15();
@@ -129,11 +131,10 @@ public class Main {
 
     private static void task12() throws IOException {
         List<Person> people = Util.getPersons();
-        LocalDate now = LocalDate.now();
         people.stream()
                 .filter(x -> x.getGender().equalsIgnoreCase("male"))
-                .filter(x -> ((ChronoUnit.YEARS.between(x.getDateOfBirth(), now)) >= 18)
-                             && ((ChronoUnit.YEARS.between(x.getDateOfBirth(), now)) < 27))
+                .filter(x -> ((ChronoUnit.YEARS.between(x.getDateOfBirth(), LocalDate.now())) >= 18)
+                             && ((ChronoUnit.YEARS.between(x.getDateOfBirth(), LocalDate.now())) < 27))
                 .sorted(Comparator.comparingInt(Person::getRecruitmentGroup))
                 .limit(200)
                 .forEach(System.out::println);
@@ -141,7 +142,23 @@ public class Main {
 
     private static void task13() throws IOException {
         List<House> houses = Util.getHouses();
-        //        Продолжить...
+        List<Person> people = Stream.concat(
+                houses.stream()
+                        .filter(x -> x.getBuildingType().equalsIgnoreCase("hospital"))
+                        .flatMap(x -> x.getPersonList().stream()),
+                Stream.concat(houses.stream()
+                                .filter(h -> !h.getBuildingType().equalsIgnoreCase("hospital"))
+                                .flatMap(h -> h.getPersonList().stream()
+                                        .filter(p -> ((ChronoUnit.YEARS.between(p.getDateOfBirth(), LocalDate.now()) <= 18)
+                                                      || (ChronoUnit.YEARS.between(p.getDateOfBirth(), LocalDate.now()) > 59)))),
+                        houses.stream()
+                                .filter(h -> !h.getBuildingType().equalsIgnoreCase("hospital")).
+                                flatMap(h -> h.getPersonList().stream()
+                                        .filter(p -> (ChronoUnit.YEARS.between(p.getDateOfBirth(), LocalDate.now()) > 18
+                                                     || (ChronoUnit.YEARS.between(p.getDateOfBirth(), LocalDate.now()) > 59))))
+                )
+        ).limit(500).toList();
+        people.forEach(System.out::println);
     }
 
     private static void task14() throws IOException {
