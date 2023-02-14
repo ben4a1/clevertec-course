@@ -46,8 +46,9 @@ public class Main {
 
     private static void task3() throws IOException {
         List<Animal> animals = Util.getAnimals();
+        int olderThan = 30;
                 animals.stream()
-                        .filter(x -> x.getAge() > 30)
+                        .filter(x -> x.getAge() > olderThan)
                         .map(Animal::getOrigin)
                         .filter(x -> x.startsWith("A"))
                         .distinct()
