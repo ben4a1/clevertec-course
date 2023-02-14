@@ -184,8 +184,8 @@ public class Main {
         cars.removeAll(carListForKyrgyz);
         List<Car> carListForRus = Stream.concat(cars.stream().filter(x -> !x.getColor().equalsIgnoreCase("YELLOW")
                                                                           || !x.getColor().equalsIgnoreCase("RED")
-                                                                          || !x.getColor().equalsIgnoreCase("Green")
-                                                                          || !x.getColor().equalsIgnoreCase("Blue")),
+                                                                          || !x.getColor().equalsIgnoreCase("GREEN")
+                                                                          || !x.getColor().equalsIgnoreCase("blue")),
                 cars.stream().filter(x -> x.getPrice() > 40000)).distinct().toList();
         cars.removeAll(carListForRus);
         List<Car> carListForMongol = cars.stream().filter(x -> x.getVin().toLowerCase().contains("59")).toList();
