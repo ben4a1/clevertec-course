@@ -13,30 +13,34 @@ import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-//        task1();
-//        task2();
-//        task3();
-//        task4();
-//        task5();
-//        task6();
-//        task7();
-//        task8();
-//        task9();
-//        task10();
-//        task11();
-//        task12();
-//        task13();
+        task1();
+        task2();
+        task3();
+        task4();
+        task5();
+        task6();
+        task7();
+        task8();
+        task9();
+        task10();
+        task11();
+        task12();
+        task13();
         task14();
         task15();
     }
 
     private static void task1() throws IOException {
+        int ageFrom = 10;
+        int ageTo = 20;
+        int animalPerZoo = 7;
+        int numberOfOurZoo = 3;
         List<Animal> animals = Util.getAnimals();
         animals.stream()
-                .filter(x -> ((x.getAge() >= 10) && (x.getAge() < 20)))
+                .filter(x -> ((x.getAge() >= ageFrom) && (x.getAge() < ageTo)))
                 .sorted(Comparator.comparingInt(Animal::getAge))
-                .skip(14)
-                .limit(7)
+                .skip(animalPerZoo * (numberOfOurZoo - 1))
+                .limit(animalPerZoo)
                 .forEach(System.out::println);
     }
 
