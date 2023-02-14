@@ -77,8 +77,10 @@ public class Main {
 
     private static void task5() throws IOException {
         List<Animal> animals = Util.getAnimals();
+        int ageMoreThan = 20;
+        int ageLessThan = 30;
         boolean isAnyHungarian = animals.stream()
-                .filter(animal -> ((animal.getAge() >= 20) && (animal.getAge() <= 30)))
+                .filter(animal -> ((animal.getAge() >= ageMoreThan) && (animal.getAge() <= ageLessThan)))
                 .anyMatch(animal -> "hungarian".equalsIgnoreCase(animal.getOrigin()));
         System.out.println(isAnyHungarian);
     }
