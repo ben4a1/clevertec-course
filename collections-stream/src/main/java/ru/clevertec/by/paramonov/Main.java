@@ -57,10 +57,11 @@ public class Main {
 
     private static void task3() throws IOException {
         List<Animal> animals = Util.getAnimals();
+        int olderThan = 30;
         animals.stream()
-                .filter(animal -> animal.getAge() > 30)
+                .filter(x -> x.getAge() > olderThan)
                 .map(Animal::getOrigin)
-                .filter(countryOfOrigin -> countryOfOrigin.startsWith("A"))
+                .filter(x -> x.startsWith("A"))
                 .distinct()
                 .forEach(System.out::println);
     }
