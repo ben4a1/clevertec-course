@@ -13,21 +13,21 @@ import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        task1();
+//        task1();
         task2();
-        task3();
-        task4();
-        task5();
-        task6();
-        task7();
-        task8();
-        task9();
-        task10();
-        task11();
-        task12();
-        task13();
-        task14();
-        task15();
+//        task3();
+//        task4();
+//        task5();
+//        task6();
+//        task7();
+//        task8();
+//        task9();
+//        task10();
+//        task11();
+//        task12();
+//        task13();
+//        task14();
+//        task15();
     }
 
     private static void task1() throws IOException {
@@ -45,15 +45,14 @@ public class Main {
     }
 
 
-    //TODO without 'if'
     private static void task2() throws IOException {
         List<Animal> animals = Util.getAnimals();
         animals.stream()
                 .filter(animal -> "japanese".equalsIgnoreCase(animal.getOrigin()))
-                .map(animal -> "female".equalsIgnoreCase(animal.getGender())
-                        ? animal.getBread().toUpperCase()
-                        : animal.getBread())
-                .forEach(System.out::println);
+                .collect(Collectors.groupingBy(Animal::getGender))
+                .forEach((gender, animalList) -> System.out.println("female".equalsIgnoreCase(gender)
+                        ? animalList.stream().map(animal -> animal.getBread().toUpperCase()).collect(Collectors.toList())
+                        : animalList.stream().map(Animal::getBread).collect(Collectors.toList())));
     }
 
     private static void task3() throws IOException {
