@@ -45,19 +45,19 @@ public class Main {
     private static void task2() throws IOException {
         List<Animal> animals = Util.getAnimals();
         animals.stream()
-                .filter(x -> x.getOrigin().equalsIgnoreCase("japanese"))
-                .map(x -> x.getGender().equalsIgnoreCase("female")
-                        ? x.getBread().toUpperCase()
-                        : x.getBread())
+                .filter(animal -> "japanese".equalsIgnoreCase(animal.getOrigin()))
+                .map(animal -> "female".equalsIgnoreCase(animal.getGender())
+                        ? animal.getBread().toUpperCase()
+                        : animal.getBread())
                 .forEach(System.out::println);
     }
 
     private static void task3() throws IOException {
         List<Animal> animals = Util.getAnimals();
         animals.stream()
-                .filter(x -> x.getAge() > 30)
+                .filter(animal -> animal.getAge() > 30)
                 .map(Animal::getOrigin)
-                .filter(x -> x.startsWith("A"))
+                .filter(countryOfOrigin -> countryOfOrigin.startsWith("A"))
                 .distinct()
                 .forEach(System.out::println);
     }
@@ -65,7 +65,7 @@ public class Main {
     private static void task4() throws IOException {
         List<Animal> animals = Util.getAnimals();
         long femaleCount = animals.stream()
-                .filter(x -> x.getGender().equalsIgnoreCase("female"))
+                .filter(animal -> "female".equalsIgnoreCase(animal.getGender()))
                 .count();
         System.out.println(femaleCount);
 
@@ -74,23 +74,23 @@ public class Main {
     private static void task5() throws IOException {
         List<Animal> animals = Util.getAnimals();
         boolean isAnyHungarian = animals.stream()
-                .filter(x -> ((x.getAge() >= 20) && (x.getAge() <= 30)))
-                .anyMatch(x -> x.getOrigin().equalsIgnoreCase("hungarian"));
+                .filter(animal -> ((animal.getAge() >= 20) && (animal.getAge() <= 30)))
+                .anyMatch(animal -> "hungarian".equalsIgnoreCase(animal.getOrigin()));
         System.out.println(isAnyHungarian);
     }
 
     private static void task6() throws IOException {
         List<Animal> animals = Util.getAnimals();
         boolean isOnlyMaleAndFemale = animals.stream()
-                .allMatch(x -> (x.getGender().equalsIgnoreCase("male")
-                                || x.getGender().equalsIgnoreCase("female")));
+                .allMatch(animal -> ("male".equalsIgnoreCase(animal.getGender())
+                                     || "female".equalsIgnoreCase(animal.getGender())));
         System.out.println(isOnlyMaleAndFemale);
     }
 
     private static void task7() throws IOException {
         List<Animal> animals = Util.getAnimals();
         boolean isNoOneFromOceania = animals.stream()
-                .noneMatch(x -> x.getOrigin().equalsIgnoreCase("Oceania"));
+                .noneMatch(animal -> "Oceania".equalsIgnoreCase(animal.getOrigin()));
         System.out.println(isNoOneFromOceania);
     }
 
@@ -107,7 +107,7 @@ public class Main {
     private static void task9() throws IOException {
         List<Animal> animals = Util.getAnimals();
         OptionalInt min = animals.stream()
-                .mapToInt(x -> x.getBread().toCharArray().length)
+                .mapToInt(animal -> animal.getBread().toCharArray().length)
                 .min();
         min.ifPresent(System.out::println);
     }
@@ -123,7 +123,7 @@ public class Main {
     private static void task11() throws IOException {
         List<Animal> animals = Util.getAnimals();
         OptionalDouble indonesianAverageAge = animals.stream()
-                .filter(x -> x.getOrigin().equalsIgnoreCase("Indonesian"))
+                .filter(animal -> "Indonesian".equalsIgnoreCase(animal.getOrigin()))
                 .mapToInt(Animal::getAge)
                 .average();
         indonesianAverageAge.ifPresent(System.out::println);
@@ -132,9 +132,9 @@ public class Main {
     private static void task12() throws IOException {
         List<Person> people = Util.getPersons();
         people.stream()
-                .filter(x -> x.getGender().equalsIgnoreCase("male"))
-                .filter(x -> ((ChronoUnit.YEARS.between(x.getDateOfBirth(), LocalDate.now())) >= 18)
-                             && ((ChronoUnit.YEARS.between(x.getDateOfBirth(), LocalDate.now())) < 27))
+                .filter(person -> "male".equalsIgnoreCase(person.getGender()))
+                .filter(person -> ((ChronoUnit.YEARS.between(person.getDateOfBirth(), LocalDate.now())) >= 18)
+                                  && ((ChronoUnit.YEARS.between(person.getDateOfBirth(), LocalDate.now())) < 27))
                 .sorted(Comparator.comparingInt(Person::getRecruitmentGroup))
                 .limit(200)
                 .forEach(System.out::println);
@@ -142,56 +142,53 @@ public class Main {
 
     private static void task13() throws IOException {
         List<House> houses = Util.getHouses();
-        List<Person> people = Stream.concat(
-                houses.stream()
-                        .filter(x -> x.getBuildingType().equalsIgnoreCase("hospital"))
-                        .flatMap(x -> x.getPersonList().stream()),
-                Stream.concat(houses.stream()
-                                .filter(h -> !h.getBuildingType().equalsIgnoreCase("hospital"))
-                                .flatMap(h -> h.getPersonList().stream()
-                                        .filter(p -> ((ChronoUnit.YEARS.between(p.getDateOfBirth(), LocalDate.now()) <= 18)
-                                                      || (ChronoUnit.YEARS.between(p.getDateOfBirth(), LocalDate.now()) > 59)))),
+        Stream.concat(
                         houses.stream()
-                                .filter(h -> !h.getBuildingType().equalsIgnoreCase("hospital")).
-                                flatMap(h -> h.getPersonList().stream()
-                                        .filter(p -> (ChronoUnit.YEARS.between(p.getDateOfBirth(), LocalDate.now()) > 18
-                                                      || (ChronoUnit.YEARS.between(p.getDateOfBirth(), LocalDate.now()) > 59))))
-                )
-        ).limit(500).toList();
-        people.forEach(System.out::println);
+                                .filter(house -> "hospital".equalsIgnoreCase(house.getBuildingType()))
+                                .flatMap(house -> house.getPersonList().stream()),
+                        Stream.concat(houses.stream()
+                                        .filter(house -> !"hospital".equalsIgnoreCase(house.getBuildingType()))
+                                        .flatMap(house -> house.getPersonList().stream()
+                                                .filter(person -> ((ChronoUnit.YEARS.between(person.getDateOfBirth(), LocalDate.now()) <= 18)
+                                                                   || (ChronoUnit.YEARS.between(person.getDateOfBirth(), LocalDate.now()) > 59)))),
+                                houses.stream()
+                                        .filter(house -> !"hospital".equalsIgnoreCase(house.getBuildingType())).
+                                        flatMap(personList -> personList.getPersonList().stream()
+                                                .filter(person -> (ChronoUnit.YEARS.between(person.getDateOfBirth(), LocalDate.now()) > 18
+                                                                   || (ChronoUnit.YEARS.between(person.getDateOfBirth(), LocalDate.now()) > 59))))
+                        )
+                ).limit(500)
+                .forEach(System.out::println);
     }
 
     private static void task14() throws IOException {
         List<Car> cars = Util.getCars();
-        List<Car> carListForTurkmen = Stream.concat(cars.stream().filter(a -> a.getColor().equalsIgnoreCase("WHITE")),
-                cars.stream().filter(a -> a.getCarMake().equalsIgnoreCase("JAGUAR"))
+        List<Car> carListForTurkmen = Stream.concat(cars.stream().filter(car -> car.getColor().equalsIgnoreCase("WHITE")),
+                cars.stream().filter(car -> car.getCarMake().equalsIgnoreCase("JAGUAR"))
         ).distinct().toList();
         cars.removeAll(carListForTurkmen);
-        List<Car> carListForUzbek = Stream.concat(cars.stream().filter(x -> (x.getMass() > 1500)),
-                cars.stream().filter(x -> x.getCarMake().equalsIgnoreCase("BMW")
-                                          || x.getCarMake().equalsIgnoreCase("LEXUS")
-                                          || x.getCarMake().equalsIgnoreCase("CHRYSLER")
-                                          || x.getCarMake().equalsIgnoreCase("TOYOTA"))).distinct().toList();
+        List<Car> carListForUzbek = Stream.concat(cars.stream().filter(car -> (car.getMass() > 1500)),
+                cars.stream().filter(car -> car.getCarMake().equalsIgnoreCase("BMW")
+                                            || car.getCarMake().equalsIgnoreCase("LEXUS")
+                                            || car.getCarMake().equalsIgnoreCase("CHRYSLER")
+                                            || car.getCarMake().equalsIgnoreCase("TOYOTA"))).distinct().toList();
         cars.removeAll(carListForUzbek);
-        List<Car> carListForKazakh = Stream.concat(cars.stream().filter(x -> (x.getColor().equalsIgnoreCase("black")
-                                                                              && x.getMass() > 4000)),
-                cars.stream().filter(x -> (x.getCarMake().equalsIgnoreCase("GMC")
-                                           || x.getCarMake().equalsIgnoreCase("DODGE")))).distinct().toList();
+        List<Car> carListForKazakh = Stream.concat(cars.stream().filter(car -> (car.getColor().equalsIgnoreCase("black")
+                                                                                && car.getMass() > 4000)),
+                cars.stream().filter(car -> (car.getCarMake().equalsIgnoreCase("GMC")
+                                             || car.getCarMake().equalsIgnoreCase("DODGE")))).distinct().toList();
         cars.removeAll(carListForKazakh);
-        List<Car> carListForKyrgyz = Stream.concat(cars.stream().filter(x -> x.getReleaseYear() <= 1982),
-                cars.stream().filter(x -> x.getCarModel().equalsIgnoreCase("CIVIC")
-                                          || x.getCarModel().equalsIgnoreCase("Cherokee"))).distinct().toList();
+        List<Car> carListForKyrgyz = Stream.concat(cars.stream().filter(car -> car.getReleaseYear() <= 1982),
+                cars.stream().filter(car -> car.getCarModel().equalsIgnoreCase("CIVIC")
+                                            || car.getCarModel().equalsIgnoreCase("Cherokee"))).distinct().toList();
         cars.removeAll(carListForKyrgyz);
-        List<Car> carListForRus = Stream.concat(cars.stream().filter(x -> !x.getColor().equalsIgnoreCase("YELLOW")
-                                                                          || !x.getColor().equalsIgnoreCase("RED")
-                                                                          || !x.getColor().equalsIgnoreCase("GREEN")
-                                                                          || !x.getColor().equalsIgnoreCase("blue")),
-                cars.stream().filter(x -> x.getPrice() > 40000)).distinct().toList();
+        List<Car> carListForRus = Stream.concat(cars.stream().filter(car -> !car.getColor().equalsIgnoreCase("YELLOW")
+                                                                            || !car.getColor().equalsIgnoreCase("RED")
+                                                                            || !car.getColor().equalsIgnoreCase("GREEN")
+                                                                            || !car.getColor().equalsIgnoreCase("blue")),
+                cars.stream().filter(car -> car.getPrice() > 40000)).distinct().toList();
         cars.removeAll(carListForRus);
-        List<Car> carListForMongol = cars.stream().filter(x -> x.getVin().toLowerCase().contains("59")).toList();
-        double v = carListForTurkmen.stream()
-                           .map(Car::getMass)
-                           .reduce(0, Integer::sum) * 7.14;
+        List<Car> carListForMongol = cars.stream().filter(car -> car.getVin().toLowerCase().contains("59")).toList();
 
         Stream.concat(Stream.concat(Stream.concat(Stream.concat(Stream.concat(carListForTurkmen.stream(),
                                                 carListForUzbek.stream()),
