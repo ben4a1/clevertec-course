@@ -1,6 +1,5 @@
 package ru.clevertec.by.paramonov;
 
-import com.fasterxml.jackson.core.JsonToken;
 import ru.clevertec.by.paramonov.model.*;
 import ru.clevertec.by.paramonov.util.Util;
 
@@ -9,32 +8,34 @@ import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
-import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-//        task1();
-//        task2();
-//        task3();
-//        task4();
-//        task5();
-//        task6();
-//        task7();
-//        task8();
-//        task9();
-//        task10();
-//        task11();
-//        task12();
-//        task13();
-//        task14();
+        task1();
+        task2();
+        task3();
+        task4();
+        task5();
+        task6();
+        task7();
+        task8();
+        task9();
+        task10();
+        task11();
+        task12();
+        task13();
+        task14();
         task15();
     }
 
     private static void task1() throws IOException {
+        System.out.println("\n" + new Object() {}
+                                   .getClass()
+                                   .getEnclosingMethod()
+                                   .getName().toUpperCase() + "\n");
         int ageFrom = 10;
         int ageTo = 20;
         int animalPerZoo = 7;
@@ -50,6 +51,10 @@ public class Main {
 
 
     private static void task2() throws IOException {
+        System.out.println("\n" + new Object() {}
+                                   .getClass()
+                                   .getEnclosingMethod()
+                                   .getName().toUpperCase() + "\n");
         List<Animal> animals = Util.getAnimals();
         animals.stream()
                 .filter(animal -> "japanese".equalsIgnoreCase(animal.getOrigin()))
@@ -60,6 +65,10 @@ public class Main {
     }
 
     private static void task3() throws IOException {
+        System.out.println("\n" + new Object() {}
+                                   .getClass()
+                                   .getEnclosingMethod()
+                                   .getName().toUpperCase() + "\n");
         List<Animal> animals = Util.getAnimals();
         int olderThan = 30;
         animals.stream()
@@ -71,6 +80,10 @@ public class Main {
     }
 
     private static void task4() throws IOException {
+        System.out.println("\n" + new Object() {}
+                                   .getClass()
+                                   .getEnclosingMethod()
+                                   .getName().toUpperCase() + "\n");
         List<Animal> animals = Util.getAnimals();
         long femaleCount = animals.stream()
                 .filter(animal -> "female".equalsIgnoreCase(animal.getGender()))
@@ -80,6 +93,10 @@ public class Main {
     }
 
     private static void task5() throws IOException {
+        System.out.println("\n" + new Object() {}
+                                   .getClass()
+                                   .getEnclosingMethod()
+                                   .getName().toUpperCase() + "\n");
         List<Animal> animals = Util.getAnimals();
         int ageMoreThan = 20;
         int ageLessThan = 30;
@@ -90,6 +107,10 @@ public class Main {
     }
 
     private static void task6() throws IOException {
+        System.out.println("\n" + new Object() {}
+                .getClass()
+                .getEnclosingMethod()
+                .getName().toUpperCase() + "\n");
         List<Animal> animals = Util.getAnimals();
         boolean isOnlyMaleAndFemale = animals.stream()
                 .allMatch(animal -> ("male".equalsIgnoreCase(animal.getGender())
@@ -98,6 +119,10 @@ public class Main {
     }
 
     private static void task7() throws IOException {
+        System.out.println("\n" + new Object() {}
+                                   .getClass()
+                                   .getEnclosingMethod()
+                                   .getName().toUpperCase() + "\n");
         List<Animal> animals = Util.getAnimals();
         boolean isNoOneFromOceania = animals.stream()
                 .noneMatch(animal -> "Oceania".equalsIgnoreCase(animal.getOrigin()));
@@ -105,6 +130,10 @@ public class Main {
     }
 
     private static void task8() throws IOException {
+        System.out.println("\n" + new Object() {}
+                                   .getClass()
+                                   .getEnclosingMethod()
+                                   .getName().toUpperCase() + "\n");
         List<Animal> animals = Util.getAnimals();
         int firstValues = 100;
         animals.stream()
@@ -115,6 +144,10 @@ public class Main {
     }
 
     private static void task9() throws IOException {
+        System.out.println("\n" + new Object() {}
+                                   .getClass()
+                                   .getEnclosingMethod()
+                                   .getName().toUpperCase() + "\n");
         List<Animal> animals = Util.getAnimals();
         animals.stream()
                 .mapToInt(animal -> animal.getBread().toCharArray().length)
@@ -122,6 +155,10 @@ public class Main {
     }
 
     private static void task10() throws IOException {
+        System.out.println("\n" + new Object() {}
+                                   .getClass()
+                                   .getEnclosingMethod()
+                                   .getName().toUpperCase() + "\n");
         List<Animal> animals = Util.getAnimals();
         System.out.println(animals.stream()
                 .mapToInt(Animal::getAge)
@@ -129,6 +166,10 @@ public class Main {
     }
 
     private static void task11() throws IOException {
+        System.out.println("\n" + new Object() {}
+                                   .getClass()
+                                   .getEnclosingMethod()
+                                   .getName().toUpperCase() + "\n");
         List<Animal> animals = Util.getAnimals();
         animals.stream()
                 .filter(animal -> "Indonesian".equalsIgnoreCase(animal.getOrigin()))
@@ -137,6 +178,10 @@ public class Main {
     }
 
     private static void task12() throws IOException {
+        System.out.println("\n" + new Object() {}
+                                   .getClass()
+                                   .getEnclosingMethod()
+                                   .getName().toUpperCase() + "\n");
         List<Person> people = Util.getPersons();
         int ageMin = 18;
         int ageMax = 27;
@@ -151,6 +196,10 @@ public class Main {
     }
 
     private static void task13() throws IOException {
+        System.out.println("\n" + new Object() {}
+                                   .getClass()
+                                   .getEnclosingMethod()
+                                   .getName().toUpperCase() + "\n");
         List<House> houses = Util.getHouses();
         int firstArkSize = 500;
         Stream.concat(
@@ -173,6 +222,10 @@ public class Main {
     }
 
     private static void task14() throws IOException {
+        System.out.println("\n" + new Object() {}
+                                   .getClass()
+                                   .getEnclosingMethod()
+                                   .getName().toUpperCase() + "\n");
         List<Car> cars = Util.getCars();
         DecimalFormat df = new DecimalFormat(".##");
         List<Car> carListForTurkmen = Stream.concat(cars.stream().filter(car -> "WHITE".equalsIgnoreCase(car.getColor())),
@@ -225,6 +278,10 @@ public class Main {
     }
 
     private static void task15() throws IOException {
+        System.out.println("\n" + new Object() {}
+                                   .getClass()
+                                   .getEnclosingMethod()
+                                   .getName().toUpperCase() + "\n");
         List<Flower> flowers = Util.getFlowers();
         String regex = "^[C-S]\\D*";
         DecimalFormat df = new DecimalFormat(".##");
