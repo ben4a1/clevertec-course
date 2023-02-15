@@ -102,9 +102,10 @@ public class Main {
 
     private static void task8() throws IOException {
         List<Animal> animals = Util.getAnimals();
+        int firstValues = 100;
         animals.stream()
                 .sorted(Comparator.comparing(Animal::getBread))
-                .limit(100)
+                .limit(firstValues)
                 .mapToInt(Animal::getAge)
                 .max().ifPresent(System.out::println);
     }
