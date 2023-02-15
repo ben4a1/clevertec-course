@@ -126,11 +126,10 @@ public class Main {
 
     private static void task11() throws IOException {
         List<Animal> animals = Util.getAnimals();
-        OptionalDouble indonesianAverageAge = animals.stream()
+        animals.stream()
                 .filter(animal -> "Indonesian".equalsIgnoreCase(animal.getOrigin()))
                 .mapToInt(Animal::getAge)
-                .average();
-        indonesianAverageAge.ifPresent(System.out::println);
+                .average().ifPresent(System.out::println);
     }
 
     private static void task12() throws IOException {
