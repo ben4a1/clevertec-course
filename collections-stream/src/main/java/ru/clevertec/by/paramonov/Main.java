@@ -148,6 +148,7 @@ public class Main {
 
     private static void task13() throws IOException {
         List<House> houses = Util.getHouses();
+        int firstArkSize = 500;
         Stream.concat(
                         houses.stream()
                                 .filter(house -> "hospital".equalsIgnoreCase(house.getBuildingType()))
@@ -163,7 +164,7 @@ public class Main {
                                                 .filter(person -> (ChronoUnit.YEARS.between(person.getDateOfBirth(), LocalDate.now()) > 18
                                                                    || (ChronoUnit.YEARS.between(person.getDateOfBirth(), LocalDate.now()) > 59))))
                         )
-                ).limit(500)
+                ).limit(firstArkSize)
                 .forEach(System.out::println);
     }
 
