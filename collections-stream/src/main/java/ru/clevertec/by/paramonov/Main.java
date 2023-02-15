@@ -340,7 +340,7 @@ public class Main {
                                                           || "MERCEDES-BENZ".equalsIgnoreCase(homoErectus.getCar().getCarMake())
                                                           || "JAGUAR".equalsIgnoreCase(homoErectus.getCar().getCarMake()))
                                    .filter(homoErectus -> homoErectus.getFlower().getFlowerVaseMaterial().contains("Glass"))
-//                .filter(homoErectus -> homoErectus.getAnimal().getBread().matches("(w+[cat] )|dog"))
+//                .filter(homoErectus -> homoErectus.getAnimal().getBread().matches("(w+[cat] )|(D|d)og|(L|l)obster"))
                                    .limit(40)
                                    .sorted(Comparator.comparing(HomoErectus::getCity))
                                    .filter(homoErectus -> !BigInteger.valueOf(homoErectus.getId()).isProbablePrime(123111))
