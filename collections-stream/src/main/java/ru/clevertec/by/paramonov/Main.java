@@ -119,10 +119,9 @@ public class Main {
 
     private static void task10() throws IOException {
         List<Animal> animals = Util.getAnimals();
-        int sumAge = animals.stream()
+        System.out.println(animals.stream()
                 .mapToInt(Animal::getAge)
-                .reduce(0, Integer::sum);
-        System.out.println(sumAge);
+                .reduce(0, Integer::sum));
     }
 
     private static void task11() throws IOException {
