@@ -134,12 +134,15 @@ public class Main {
 
     private static void task12() throws IOException {
         List<Person> people = Util.getPersons();
+        int ageMin = 18;
+        int ageMax = 27;
+        int armadaSize = 200;
         people.stream()
                 .filter(person -> "male".equalsIgnoreCase(person.getGender()))
-                .filter(person -> ((ChronoUnit.YEARS.between(person.getDateOfBirth(), LocalDate.now())) >= 18)
-                                  && ((ChronoUnit.YEARS.between(person.getDateOfBirth(), LocalDate.now())) < 27))
+                .filter(person -> ((ChronoUnit.YEARS.between(person.getDateOfBirth(), LocalDate.now())) >= ageMin)
+                                  && ((ChronoUnit.YEARS.between(person.getDateOfBirth(), LocalDate.now())) < ageMax))
                 .sorted(Comparator.comparingInt(Person::getRecruitmentGroup))
-                .limit(200)
+                .limit(armadaSize)
                 .forEach(System.out::println);
     }
 
