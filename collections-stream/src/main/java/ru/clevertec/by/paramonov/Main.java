@@ -112,10 +112,9 @@ public class Main {
 
     private static void task9() throws IOException {
         List<Animal> animals = Util.getAnimals();
-        OptionalInt min = animals.stream()
+        animals.stream()
                 .mapToInt(animal -> animal.getBread().toCharArray().length)
-                .min();
-        min.ifPresent(System.out::println);
+                .min().ifPresent(System.out::println);
     }
 
     private static void task10() throws IOException {
