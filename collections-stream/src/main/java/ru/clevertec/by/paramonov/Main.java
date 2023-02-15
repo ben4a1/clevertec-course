@@ -5,9 +5,12 @@ import ru.clevertec.by.paramonov.model.*;
 import ru.clevertec.by.paramonov.util.Util;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -26,7 +29,7 @@ public class Main {
 //        task11();
 //        task12();
 //        task13();
-//        task14();
+        task14();
 //        task15();
     }
 
@@ -170,39 +173,54 @@ public class Main {
 
     private static void task14() throws IOException {
         List<Car> cars = Util.getCars();
-        List<Car> carListForTurkmen = Stream.concat(cars.stream().filter(car -> car.getColor().equalsIgnoreCase("WHITE")),
-                cars.stream().filter(car -> car.getCarMake().equalsIgnoreCase("JAGUAR"))
+        DecimalFormat df = new DecimalFormat(".##");
+        List<Car> carListForTurkmen = Stream.concat(cars.stream().filter(car -> "WHITE".equalsIgnoreCase(car.getColor())),
+                cars.stream().filter(car -> "JAGUAR".equalsIgnoreCase(car.getCarMake()))
         ).distinct().toList();
         cars.removeAll(carListForTurkmen);
-        List<Car> carListForUzbek = Stream.concat(cars.stream().filter(car -> (car.getMass() > 1500)),
-                cars.stream().filter(car -> car.getCarMake().equalsIgnoreCase("BMW")
-                                            || car.getCarMake().equalsIgnoreCase("LEXUS")
-                                            || car.getCarMake().equalsIgnoreCase("CHRYSLER")
-                                            || car.getCarMake().equalsIgnoreCase("TOYOTA"))).distinct().toList();
+        List<Car> carListForUzbek = Stream.concat(cars.stream().filter(car -> (car.getMass() < 1500)),
+                cars.stream().filter(car -> "BMW".equalsIgnoreCase(car.getCarMake())
+                                            || "LEXUS".equalsIgnoreCase(car.getCarMake())
+                                            || "CHRYSLER".equalsIgnoreCase(car.getCarMake())
+                                            || "TOYOTA".equalsIgnoreCase(car.getCarMake()))).distinct().toList();
         cars.removeAll(carListForUzbek);
-        List<Car> carListForKazakh = Stream.concat(cars.stream().filter(car -> (car.getColor().equalsIgnoreCase("black")
+        List<Car> carListForKazakh = Stream.concat(cars.stream().filter(car -> ("BLACK".equalsIgnoreCase(car.getColor())
                                                                                 && car.getMass() > 4000)),
-                cars.stream().filter(car -> (car.getCarMake().equalsIgnoreCase("GMC")
-                                             || car.getCarMake().equalsIgnoreCase("DODGE")))).distinct().toList();
+                cars.stream().filter(car -> ("GMC".equalsIgnoreCase(car.getCarMake())
+                                             || "DODGE".equalsIgnoreCase(car.getCarMake())))).distinct().toList();
         cars.removeAll(carListForKazakh);
         List<Car> carListForKyrgyz = Stream.concat(cars.stream().filter(car -> car.getReleaseYear() <= 1982),
-                cars.stream().filter(car -> car.getCarModel().equalsIgnoreCase("CIVIC")
-                                            || car.getCarModel().equalsIgnoreCase("Cherokee"))).distinct().toList();
+                cars.stream().filter(car -> "CIVIC".equalsIgnoreCase(car.getCarModel())
+                                            || "CHEROKEE".equalsIgnoreCase(car.getCarModel()))).distinct().toList();
         cars.removeAll(carListForKyrgyz);
-        List<Car> carListForRus = Stream.concat(cars.stream().filter(car -> !car.getColor().equalsIgnoreCase("YELLOW")
-                                                                            || !car.getColor().equalsIgnoreCase("RED")
-                                                                            || !car.getColor().equalsIgnoreCase("GREEN")
-                                                                            || !car.getColor().equalsIgnoreCase("blue")),
+        List<Car> carListForRus = Stream.concat(cars.stream().filter(car -> (!"YELLOW".equalsIgnoreCase(car.getColor())
+                                                                             && !"RED".equalsIgnoreCase(car.getColor())
+                                                                             && !"GREEN".equalsIgnoreCase(car.getColor())
+                                                                             && !"BLUE".equalsIgnoreCase(car.getColor()))),
                 cars.stream().filter(car -> car.getPrice() > 40000)).distinct().toList();
         cars.removeAll(carListForRus);
-        List<Car> carListForMongol = cars.stream().filter(car -> car.getVin().toLowerCase().contains("59")).toList();
+        List<Car> carListForMongol = cars.stream().filter(car -> car.getVin().contains("59")).toList();
 
-        Stream.concat(Stream.concat(Stream.concat(Stream.concat(Stream.concat(carListForTurkmen.stream(),
-                                                carListForUzbek.stream()),
-                                        carListForKazakh.stream()),
-                                carListForKyrgyz.stream()),
-                        carListForRus.stream()),
-                carListForMongol.stream()).mapToDouble(x -> x.getMass() * 7.14).forEach(System.out::println);
+        Map<String, List<Car>> stringListMap = new HashMap<>();
+        stringListMap.put("Turkmenistan", carListForTurkmen);
+        stringListMap.put("Uzbekistan", carListForUzbek);
+        stringListMap.put("Kazakhstan", carListForKazakh);
+        stringListMap.put("Kyrgyzstan", carListForKyrgyz);
+        stringListMap.put("Russia", carListForRus);
+        stringListMap.put("Mongolia", carListForMongol);
+
+
+        stringListMap.forEach((country, carList) -> System.out.println(country + " : \n\t" +
+                                                                       "summary mass of echelon: " + df.format(carList.stream()
+                                                                               .map(Car::getMass)
+                                                                               .reduce(0, Integer::sum)) +
+                                                                       "$\n\tcost of transport costs: " +
+                                                                       df.format(carList.stream()
+                                                                               .map(car -> car.getMass() * 7.14)
+                                                                               .reduce(0.0, Double::sum)) + "$"));
+        System.out.println("\nTotal revenue of the logistics campaign: \n\t" + df.format(Stream.of(carListForKazakh, carListForKyrgyz, carListForMongol, carListForTurkmen, carListForUzbek, carListForRus)
+                .map(x -> x.stream().map(car -> car.getMass() * 7.14).reduce(0.0, Double::sum))
+                .reduce(0.0, Double::sum)) + "$");
     }
 
     private static void task15() throws IOException {
