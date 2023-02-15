@@ -11,6 +11,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -29,8 +30,8 @@ public class Main {
 //        task11();
 //        task12();
 //        task13();
-        task14();
-//        task15();
+//        task14();
+        task15();
     }
 
     private static void task1() throws IOException {
@@ -212,8 +213,8 @@ public class Main {
 
         stringListMap.forEach((country, carList) -> System.out.println(country + " : \n\t" +
                                                                        "summary mass of echelon: " + df.format(carList.stream()
-                                                                               .map(Car::getMass)
-                                                                               .reduce(0, Integer::sum)) +
+                .map(Car::getMass)
+                .reduce(0, Integer::sum)) +
                                                                        "$\n\tcost of transport costs: " +
                                                                        df.format(carList.stream()
                                                                                .map(car -> car.getMass() * 7.14)
@@ -225,6 +226,16 @@ public class Main {
 
     private static void task15() throws IOException {
         List<Flower> flowers = Util.getFlowers();
-        //        Продолжить...
+        String regex = "^[C-S]\\D*";
+        DecimalFormat df = new DecimalFormat(".##");
+        System.out.println("Flowers cost a fortune: " + df.format(flowers.stream().sorted(Comparator.comparing(Flower::getOrigin).reversed()
+                        .thenComparing(Flower::getPrice)
+                        .thenComparing(Flower::getWaterConsumptionPerDay).reversed())
+                .filter(flower -> Pattern.matches(regex, flower.getCommonName()))
+                .filter(Flower::isShadePreferred)
+                .filter(flower
+                        -> new HashSet<>(flower.getFlowerVaseMaterial()).containsAll(new ArrayList<>(Arrays.asList("Glass", "Aluminum", "Steel"))))
+                .map(flower -> (flower.getWaterConsumptionPerDay() * 365 * 5) * 1.39)
+                .reduce(0.0, Double::sum)) + "$");
     }
 }
