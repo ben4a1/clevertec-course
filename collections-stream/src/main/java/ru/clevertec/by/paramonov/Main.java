@@ -25,7 +25,7 @@ public class Main {
 //        task10();
 //        task11();
 //        task12();
-//        task13();
+        task13();
 //        task14();
 //        task15();
     }
@@ -149,6 +149,8 @@ public class Main {
     private static void task13() throws IOException {
         List<House> houses = Util.getHouses();
         int firstArkSize = 500;
+        int childrenAge = 18;
+        int pensionerAge = 60;
         Stream.concat(
                         houses.stream()
                                 .filter(house -> "hospital".equalsIgnoreCase(house.getBuildingType()))
@@ -156,13 +158,13 @@ public class Main {
                         Stream.concat(houses.stream()
                                         .filter(house -> !"hospital".equalsIgnoreCase(house.getBuildingType()))
                                         .flatMap(house -> house.getPersonList().stream()
-                                                .filter(person -> ((ChronoUnit.YEARS.between(person.getDateOfBirth(), LocalDate.now()) <= 18)
-                                                                   || (ChronoUnit.YEARS.between(person.getDateOfBirth(), LocalDate.now()) > 59)))),
+                                                .filter(person -> ((ChronoUnit.YEARS.between(person.getDateOfBirth(), LocalDate.now()) <= childrenAge)
+                                                                   || (ChronoUnit.YEARS.between(person.getDateOfBirth(), LocalDate.now()) >= pensionerAge)))),
                                 houses.stream()
                                         .filter(house -> !"hospital".equalsIgnoreCase(house.getBuildingType())).
                                         flatMap(personList -> personList.getPersonList().stream()
-                                                .filter(person -> (ChronoUnit.YEARS.between(person.getDateOfBirth(), LocalDate.now()) > 18
-                                                                   || (ChronoUnit.YEARS.between(person.getDateOfBirth(), LocalDate.now()) > 59))))
+                                                .filter(person -> (ChronoUnit.YEARS.between(person.getDateOfBirth(), LocalDate.now()) > childrenAge
+                                                                   || (ChronoUnit.YEARS.between(person.getDateOfBirth(), LocalDate.now()) < pensionerAge))))
                         )
                 ).limit(firstArkSize)
                 .forEach(System.out::println);
