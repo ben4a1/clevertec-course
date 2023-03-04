@@ -15,7 +15,7 @@ public class Server {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        return new Response(requestIntValue - (requestIntValue / 2));
+        return new Response(requestIntValue / 2);
     }
 
     private int generateTimeForWait() {
