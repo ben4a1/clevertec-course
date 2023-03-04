@@ -28,7 +28,7 @@ public class Client {
     }
 
     public void sendRequestList() {
-        List<Callable<Response>> callableListOfResponse = requestList.stream().map(request -> (Callable<Response>)() -> server.calculate(request)).toList();
+        List<Callable<Response>> callableListOfResponse = requestList.stream().map(request -> (Callable<Response>) () -> server.calculate(request)).toList();
         try {
             List<Future<Response>> futureList = executorService.invokeAll(callableListOfResponse);
             futureList.forEach(responseFuture -> {
